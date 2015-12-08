@@ -6,13 +6,35 @@ import android.os.Parcelable;
 /**
  * Created by gavriltonev on 12/7/15.
  */
-public class Pet {
+public class Pet implements Parcelable{
     private Integer PetID;
     private String Species;
     private String Breed;
     private String Name;
     private Integer Age;
     private Double Weight;
+
+    public Pet() {
+
+    }
+
+    public Pet(Integer PetID, String Species, String Breed, String Name, Integer Age, Double Weight){
+        this.PetID = PetID;
+        this.Species = Species;
+        this.Breed = Breed;
+        this.Name = Name;
+        this.Age = Age;
+        this.Weight = Weight;
+    }
+
+    public Pet(Parcel source) {
+        PetID = source.readInt();
+        Species = source.readString();
+        Breed = source.readString();
+        Name = source.readString();
+        Age = source.readInt();
+        Weight = source.readDouble();
+    }
 
     public int getPetID() {
         return PetID;
@@ -61,4 +83,42 @@ public class Pet {
     public void setWeight(double weight) {
         Weight = weight;
     }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        applyDefaultValues();
+
+        dest.writeInt(PetID);
+        dest.writeString(Name);
+        dest.writeString(Species);
+        dest.writeString(Breed);
+        dest.writeInt(Age);
+        dest.writeDouble(Weight);
+    }
+
+    private void applyDefaultValues() {
+        if (PetID == null) PetID = -1;
+        if (Name == null) Name = "";
+        if (Species == null) Species = "";
+        if (Breed == null) Breed = "";
+        if (Age == null) Age = -1;
+        if (Weight == null) Weight = -1.0;
+    }
+
+    public static Creator<Pet> CREATOR = new Creator<Pet>() {
+        @Override
+        public Pet createFromParcel(Parcel source) {
+            return new Pet(source);
+        }
+
+        @Override
+        public Pet[] newArray(int size) {
+            return new Pet[size];
+        }
+    };
 }

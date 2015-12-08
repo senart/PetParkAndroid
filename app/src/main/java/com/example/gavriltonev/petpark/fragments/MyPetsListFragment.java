@@ -1,11 +1,16 @@
 package com.example.gavriltonev.petpark.fragments;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.ListFragment;
 import android.util.Log;
+import android.view.View;
+import android.widget.ListView;
 import android.widget.Toast;
 
 import com.example.gavriltonev.petpark.R;
+import com.example.gavriltonev.petpark.activities.PetDetailActivity;
+import com.example.gavriltonev.petpark.adapters.MyPetsListAdapter;
 import com.example.gavriltonev.petpark.models.Pet;
 import com.example.gavriltonev.petpark.models.services.PetApiInterface;
 import com.example.gavriltonev.petpark.utils.Preferences;
@@ -23,6 +28,8 @@ import retrofit.Retrofit;
  */
 public class MyPetsListFragment extends ListFragment {
 
+    private MyPetsListAdapter myPetsListAdapter;
+
     public static MyPetsListFragment getInstance() {
         MyPetsListFragment fragment = new MyPetsListFragment();
 
@@ -32,6 +39,10 @@ public class MyPetsListFragment extends ListFragment {
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
+
+        setListShown(false);
+
+        myPetsListAdapter = new MyPetsListAdapter(getActivity(),0);
 
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(getString(R.string.petparkAPI))
@@ -47,8 +58,12 @@ public class MyPetsListFragment extends ListFragment {
                     Log.e("NULL RESPONSE BODY: ", response.message());
                 } else {
                     for (Pet pet : response.body()) {
-                        Log.e("PET FOUND:", pet.getBreed());
+                        myPetsListAdapter.add(pet);
                     }
+
+                    myPetsListAdapter.notifyDataSetChanged();
+                    setListAdapter(myPetsListAdapter);
+                    setListShown(true);
                 }
             }
 
@@ -57,5 +72,14 @@ public class MyPetsListFragment extends ListFragment {
                 Toast.makeText(getContext(), "Failure on request", Toast.LENGTH_SHORT).show();
             }
         });
+    }
+
+    @Override
+    public void onListItemClick(ListView l, View v, int position, long id) {
+        super.onListItemClick(l, v, position, id);
+
+        Intent intent = new Intent(getActivity(), PetDetailActivity.class);
+        intent.putExtra(PetDetailActivity.EXTRA_PET, myPetsListAdapter.getItem(position));
+        startActivity(intent);
     }
 }

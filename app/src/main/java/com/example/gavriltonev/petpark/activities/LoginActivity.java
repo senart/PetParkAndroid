@@ -31,6 +31,7 @@ import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -147,7 +148,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
      */
     private void attemptLogin() {
 
-        // TODO: Remove this user & pass when not testing!
+        // TODO: Remove this user & pass when not testing! /////////////////////////////////////////////////////////////
         mEmailView.setText("senart@ymail.co");
         mPasswordView.setText("123456Senart#");
 
@@ -193,7 +194,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         // Show a progress spinner, and kick off an async task to
         // perform the user login attempt.
         showProgress(true);
-
+        // Using Retrofit and Gson libraries
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(getString(R.string.petparkAPI))
                 .addConverterFactory(GsonConverterFactory.create())
@@ -205,7 +206,8 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             @Override
             public void onResponse(Response<Token> response, Retrofit retrofit) {
                 if (response.body() == null) {
-                    Log.e("Token Response Error: ", response.raw().message());
+                    Toast.makeText(getApplicationContext(),"Unrecognized username or password", Toast.LENGTH_SHORT).show();
+                    Log.e("Token Response Error: ", response.raw().message() + " CODE: " + response.raw().code());
                 } else {
                     Preferences.getInstance(getApplicationContext()).put(Preferences.Key.TOKEN_STR, response.body().getAccess_token());
                     Log.e("ACCESS TOKEN FOUND: ", Preferences.getInstance().getString(Preferences.Key.TOKEN_STR));
@@ -218,7 +220,8 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
 
             @Override
             public void onFailure(Throwable t) {
-                Log.e("Token Request Failure",t.getMessage());
+                Toast.makeText(getApplicationContext(), "Network error, please retry again", Toast.LENGTH_SHORT).show();
+                Log.e("Token Request Failure", "FAIL");
                 showProgress(false);
             }
         });
