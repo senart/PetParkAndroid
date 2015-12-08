@@ -4,31 +4,32 @@ package com.example.gavriltonev.petpark.models;
  * Created by gavriltonev on 12/8/15.
  */
 public class Token {
-    private String AccessToken;
-    private String ProfilePicURL;
-    private String UserName;
+    private String access_token;
+    private String profilePicURL;
+    private String userName;
 
-    public String getAccessToken() {
-        return AccessToken;
+    public String getAccess_token() {
+        return access_token;
     }
 
-    public void setAccessToken(String accessToken) {
-        AccessToken = accessToken;
+    public void setAccess_token(String access_token) {
+        this.access_token = access_token;
     }
 
     public String getProfilePicURL() {
-        return ProfilePicURL;
+        return profilePicURL;
     }
 
     public void setProfilePicURL(String profilePicURL) {
-        ProfilePicURL = profilePicURL;
+        this.profilePicURL = profilePicURL;
     }
 
     public String getUserName() {
-        return UserName;
+        return userName;
     }
 
     public void setUserName(String userName) {
-        UserName = userName;
+        this.userName = userName;
     }
 }
+
