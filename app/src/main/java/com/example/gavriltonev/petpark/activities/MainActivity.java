@@ -16,6 +16,7 @@ import android.widget.Toast;
 
 import com.example.gavriltonev.petpark.R;
 import com.example.gavriltonev.petpark.fragments.MyPetsListFragment;
+import com.example.gavriltonev.petpark.fragments.PetsGalleryFragment;
 import com.example.gavriltonev.petpark.fragments.ProfileFragment;
 
 public class MainActivity extends AppCompatActivity
@@ -85,15 +86,15 @@ public class MainActivity extends AppCompatActivity
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
 
-        Toast.makeText(this, "MainActivity: Section Clicked: " + item.getItemId(), Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, "MainActivity: Section Clicked: " + item.getTitle(), Toast.LENGTH_SHORT).show();
         // Handle navigation view item clicks here.
         int id = item.getItemId();
 
         if (id == R.id.nav_camera) {
             // TODO: Handle the camera action
-            getSupportFragmentManager().beginTransaction().replace(R.id.container, ProfileFragment.getInstance()).commit();
+            getSupportFragmentManager().beginTransaction().replace(R.id.container, MyPetsListFragment.getInstance()).commit();
         } else if (id == R.id.nav_gallery) {
-
+            getSupportFragmentManager().beginTransaction().replace(R.id.container, PetsGalleryFragment.getInstance()).commit();
         } else if (id == R.id.nav_slideshow) {
 
         } else if (id == R.id.nav_manage) {
