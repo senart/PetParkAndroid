@@ -12,8 +12,11 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Toast;
 
 import com.example.gavriltonev.petpark.R;
+import com.example.gavriltonev.petpark.fragments.MyPetsListFragment;
+import com.example.gavriltonev.petpark.fragments.ProfileFragment;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -42,6 +45,8 @@ public class MainActivity extends AppCompatActivity
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+
+        getSupportFragmentManager().beginTransaction().replace(R.id.container, MyPetsListFragment.getInstance()).commit();
     }
 
     @Override
@@ -79,11 +84,14 @@ public class MainActivity extends AppCompatActivity
     @SuppressWarnings("StatementWithEmptyBody")
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
+
+        Toast.makeText(this, "MainActivity: Section Clicked: " + item.getItemId(), Toast.LENGTH_SHORT).show();
         // Handle navigation view item clicks here.
         int id = item.getItemId();
 
         if (id == R.id.nav_camera) {
-            // Handle the camera action
+            // TODO: Handle the camera action
+            getSupportFragmentManager().beginTransaction().replace(R.id.container, ProfileFragment.getInstance()).commit();
         } else if (id == R.id.nav_gallery) {
 
         } else if (id == R.id.nav_slideshow) {
