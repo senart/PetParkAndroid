@@ -11,7 +11,6 @@ import android.widget.GridView;
 import android.widget.Toast;
 
 import com.example.gavriltonev.petpark.R;
-import com.example.gavriltonev.petpark.adapters.MyPetsListAdapter;
 import com.example.gavriltonev.petpark.adapters.PetsGalleryAdapter;
 import com.example.gavriltonev.petpark.models.Pet;
 import com.example.gavriltonev.petpark.models.services.PetApiInterface;
@@ -64,6 +63,8 @@ public class PetsGalleryFragment extends Fragment {
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
 
+        // Gets all pets from the database
+        // TODO: Add pagination?
         PetApiInterface petApiInterface = retrofit.create(PetApiInterface.class);
         Call<List<Pet>> call = petApiInterface.getAllPets("Bearer " + Preferences.getInstance(getContext()).getString(Preferences.Key.TOKEN_STR));
         call.enqueue(new Callback<List<Pet>>() {

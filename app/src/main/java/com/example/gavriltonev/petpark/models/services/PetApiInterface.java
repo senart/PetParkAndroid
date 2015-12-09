@@ -16,4 +16,7 @@ public interface PetApiInterface {
 
     @GET("api/pets")
     Call<List<Pet>> getAllPets(@Header("Authorization") String authorizationToken);
+
+    @GET("api/account/pets")
+    Call<List<Pet>> getUserPets(@Header("Authorization") String authorizationToken);
 }

@@ -33,8 +33,12 @@ public class PetsGalleryAdapter extends ArrayAdapter<Pet> {
             holder = (ViewHolder) convertView.getTag();
         }
 
-        // TODO: replace with this Picasso.with(getContext()).load(getItem(position).getThumbnail()).into(holder.image);
-        Picasso.with(getContext()).load("http://wac.450f.edgecastcdn.net/80450F/hudsonvalleycountry.com/files/2015/01/cat4.jpg").into(holder.image);
+        String profilePic = getItem(position).getProfilePic(); // getProfilePic() can return null
+        if (profilePic != null) {
+            Picasso.with(getContext()).load(profilePic).into(holder.image);
+        } else {
+            holder.image.setColorFilter(R.attr.colorPrimary);
+        }
 
         return convertView;
 

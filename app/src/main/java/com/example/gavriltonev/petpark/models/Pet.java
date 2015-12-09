@@ -3,6 +3,8 @@ package com.example.gavriltonev.petpark.models;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import com.google.gson.annotations.SerializedName;
+
 /**
  * Created by gavriltonev on 12/7/15.
  */
@@ -13,18 +15,16 @@ public class Pet implements Parcelable{
     private String Name;
     private Integer Age;
     private Double Weight;
+    private String ProfilePic;
 
-    public Pet() {
-
-    }
-
-    public Pet(Integer PetID, String Species, String Breed, String Name, Integer Age, Double Weight){
+    public Pet(Integer PetID, String Species, String Breed, String Name, Integer Age, Double Weight, String ProfilePic){
         this.PetID = PetID;
         this.Species = Species;
         this.Breed = Breed;
         this.Name = Name;
         this.Age = Age;
         this.Weight = Weight;
+        this.ProfilePic = ProfilePic;
     }
 
     public Pet(Parcel source) {
@@ -34,6 +34,7 @@ public class Pet implements Parcelable{
         Name = source.readString();
         Age = source.readInt();
         Weight = source.readDouble();
+        ProfilePic = source.readString();
     }
 
     public int getPetID() {
@@ -84,6 +85,15 @@ public class Pet implements Parcelable{
         Weight = weight;
     }
 
+
+    public String getProfilePic() {
+        return ProfilePic;
+    }
+
+    public void setProfilePic(String profilePic) {
+        ProfilePic = profilePic;
+    }
+
     @Override
     public int describeContents() {
         return 0;
@@ -99,6 +109,7 @@ public class Pet implements Parcelable{
         dest.writeString(Breed);
         dest.writeInt(Age);
         dest.writeDouble(Weight);
+        dest.writeString(ProfilePic);
     }
 
     private void applyDefaultValues() {
@@ -108,6 +119,7 @@ public class Pet implements Parcelable{
         if (Breed == null) Breed = "";
         if (Age == null) Age = -1;
         if (Weight == null) Weight = -1.0;
+        if (ProfilePic == null) ProfilePic = "";
     }
 
     public static Creator<Pet> CREATOR = new Creator<Pet>() {
@@ -121,4 +133,5 @@ public class Pet implements Parcelable{
             return new Pet[size];
         }
     };
+
 }

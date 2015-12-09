@@ -18,7 +18,7 @@
                 android:id="@+id/petDetailImage"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:scaleType="fitCenter"/>
+                android:scaleType="fitCenter" />
 
             <TextView
                 android:id="@+id/petDetailSpecies"

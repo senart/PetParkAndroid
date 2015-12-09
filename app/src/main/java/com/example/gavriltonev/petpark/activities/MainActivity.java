@@ -17,7 +17,7 @@ import android.widget.Toast;
 import com.example.gavriltonev.petpark.R;
 import com.example.gavriltonev.petpark.fragments.MyPetsListFragment;
 import com.example.gavriltonev.petpark.fragments.PetsGalleryFragment;
-import com.example.gavriltonev.petpark.fragments.ProfileFragment;
+import com.example.gavriltonev.petpark.fragments.PetsMapFragment;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -47,7 +47,7 @@ public class MainActivity extends AppCompatActivity
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
-        getSupportFragmentManager().beginTransaction().replace(R.id.container, MyPetsListFragment.getInstance()).commit();
+        getSupportFragmentManager().beginTransaction().replace(R.id.container, PetsGalleryFragment.getInstance()).commit();
     }
 
     @Override
@@ -90,19 +90,20 @@ public class MainActivity extends AppCompatActivity
         // Handle navigation view item clicks here.
         int id = item.getItemId();
 
-        if (id == R.id.nav_camera) {
-            // TODO: Handle the camera action
-            getSupportFragmentManager().beginTransaction().replace(R.id.container, MyPetsListFragment.getInstance()).commit();
-        } else if (id == R.id.nav_gallery) {
+        if (id == R.id.nav_gallery) {
             getSupportFragmentManager().beginTransaction().replace(R.id.container, PetsGalleryFragment.getInstance()).commit();
-        } else if (id == R.id.nav_slideshow) {
+        } else if (id == R.id.nav_my_pets) {
+            getSupportFragmentManager().beginTransaction().replace(R.id.container, MyPetsListFragment.getInstance()).commit();
+        } else if (id == R.id.nav_map) {
+            getSupportFragmentManager().beginTransaction().replace(R.id.container, PetsMapFragment.getInstance()).commit();
+        } else if (id == R.id.nav_camera) {
+            // TODO: Handle the camera action
 
-        } else if (id == R.id.nav_manage) {
+        } else if (id == R.id.nav_profile) {
+            // TODO: Show user settings
 
-        } else if (id == R.id.nav_share) {
-
-        } else if (id == R.id.nav_send) {
-
+        } else if (id == R.id.nav_logout) {
+            // TODO: Log user out
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);

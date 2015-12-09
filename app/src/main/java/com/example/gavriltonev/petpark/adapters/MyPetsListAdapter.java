@@ -41,8 +41,13 @@ public class MyPetsListAdapter extends ArrayAdapter<Pet> {
         holder.petName.setText(getItem(position).getName());
         holder.petSpecies.setText(getItem(position).getSpecies());
 
-        // TODO: add this instead Picasso.with(getContext()).load(getItem(position).getThumbnail() ).into(holder.petThumbnail);
-        Picasso.with(getContext ()).load("http://wac.450f.edgecastcdn.net/80450F/hudsonvalleycountry.com/files/2015/01/cat4.jpg" ).into(holder.petThumbnail);
+        String profilePic = getItem(position).getProfilePic(); // getProfilePic() can return null
+        if (profilePic != null) {
+            Picasso.with(getContext ()).load(getItem(position).getProfilePic() ).into(holder.petThumbnail);
+        } else {
+            holder.petThumbnail.setColorFilter(R.attr.colorPrimary);
+        }
+
         return convertView;
     }
 

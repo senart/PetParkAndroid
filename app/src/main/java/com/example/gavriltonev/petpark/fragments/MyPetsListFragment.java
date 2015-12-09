@@ -12,8 +12,12 @@ import com.example.gavriltonev.petpark.R;
 import com.example.gavriltonev.petpark.activities.PetDetailActivity;
 import com.example.gavriltonev.petpark.adapters.MyPetsListAdapter;
 import com.example.gavriltonev.petpark.models.Pet;
+import com.example.gavriltonev.petpark.models.PetImage;
 import com.example.gavriltonev.petpark.models.services.PetApiInterface;
+import com.example.gavriltonev.petpark.utils.PetImageDeserializer;
 import com.example.gavriltonev.petpark.utils.Preferences;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 
 import java.util.List;
 
@@ -49,8 +53,9 @@ public class MyPetsListFragment extends ListFragment {
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
 
+        // Gets only the pets of the user
         PetApiInterface petApiInterface = retrofit.create(PetApiInterface.class);
-        Call<List<Pet>> call = petApiInterface.getAllPets("Bearer " + Preferences.getInstance(getContext()).getString(Preferences.Key.TOKEN_STR));
+        Call<List<Pet>> call = petApiInterface.getUserPets("Bearer " + Preferences.getInstance(getContext()).getString(Preferences.Key.TOKEN_STR));
         call.enqueue(new Callback<List<Pet>>() {
             @Override
             public void onResponse(Response<List<Pet>> response, Retrofit retrofit) {

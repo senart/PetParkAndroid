@@ -214,6 +214,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
 
                     Intent intent = new Intent(getApplicationContext(), MainActivity.class);
                     startActivity(intent);
+                    finish();
                 }
                 showProgress(false);
             }

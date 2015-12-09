@@ -4,5 +4,6 @@
     android:id="@+id/petGalleryImage"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:adjustViewBounds="true" >
+    android:adjustViewBounds="true"
+    android:src="@drawable/ic_menu_gallery">
 </ImageView>
