@@ -6,43 +6,27 @@ import android.annotation.TargetApi;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
-import android.content.pm.PackageManager;
-import android.support.annotation.NonNull;
-import android.support.design.widget.Snackbar;
-import android.support.v7.app.AppCompatActivity;
-import android.app.LoaderManager.LoaderCallbacks;
-
-import android.content.CursorLoader;
-import android.content.Loader;
-import android.database.Cursor;
-import android.net.Uri;
-
 import android.os.Build;
+import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.provider.ContactsContract;
-import android.text.TextUtils;
 import android.util.Log;
-import android.util.Patterns;
-import android.view.KeyEvent;
 import android.view.View;
-import android.view.View.OnClickListener;
-import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
-import android.widget.ArrayAdapter;
-import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import com.example.gavriltonev.petpark.R;
 import com.example.gavriltonev.petpark.models.Token;
 import com.example.gavriltonev.petpark.models.User;
 import com.example.gavriltonev.petpark.models.services.TokenApiInterface;
+import com.example.gavriltonev.petpark.models.services.UserApiInterface;
 import com.example.gavriltonev.petpark.utils.Preferences;
+import com.squareup.okhttp.ResponseBody;
+
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import retrofit.Call;
 import retrofit.Callback;
@@ -50,21 +34,15 @@ import retrofit.GsonConverterFactory;
 import retrofit.Response;
 import retrofit.Retrofit;
 
-import static android.Manifest.permission.READ_CONTACTS;
+public class SignupActivity extends AppCompatActivity {
+    private static final String TAG = "SignupActivity";
 
-/**
- * A login screen that offers login via email/password.
- */
-
-public class LoginActivity extends AppCompatActivity {
-    private static final String TAG = "LoginActivity";
-    private static final int REQUEST_SIGNUP = 0;
-
-    // UI references.
     private EditText _emailText;
     private EditText _passwordText;
-    private Button _loginButton;
-    private TextView _signupLink;
+    private EditText _repeatPasswordText;
+
+    private Button   _signupButton;
+    private TextView _loginLink;
 
     private View _loginFormView;
     private View _progressDialog;
@@ -72,56 +50,76 @@ public class LoginActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_login);
+        setContentView(R.layout.activity_signup);
 
-        String token = Preferences.getInstance(this).getString(Preferences.Key.TOKEN_STR);
-        if (token != null) {
-            goToMainActivity();
-        }
+        _emailText = (EditText) findViewById(R.id.input_email);
+        _passwordText = (EditText) findViewById(R.id.input_password);
+        _repeatPasswordText = (EditText) findViewById(R.id.input_repPassword);
 
-        _emailText = (EditText) findViewById( R.id.input_email);
-        _passwordText = (EditText) findViewById( R.id.input_password);
-        _loginButton = (Button) findViewById( R.id.btn_login);
-        _signupLink = (TextView) findViewById( R.id.link_signup);
+        _signupButton = (Button) findViewById(R.id.btn_signup);
+        _loginLink = (TextView) findViewById(R.id.link_login);
 
         _loginFormView = findViewById(R.id.login_form);
         _progressDialog = findViewById(R.id.login_progress);
 
-        _loginButton.setOnClickListener(new View.OnClickListener(){
+        _signupButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                login();
+                signup();
             }
         });
 
-        _signupLink.setOnClickListener(new View.OnClickListener() {
+        _loginLink.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // Go to the Singup Activity
-                Intent intent = new Intent(getApplicationContext(), SignupActivity.class);
-                startActivityForResult(intent, REQUEST_SIGNUP);
+                // Go to the Login Activity
+                onSignupSuccess(new User("some", "some2", "some3"));
+                finish();
             }
         });
     }
 
-    private void login() {
-        Log.d(TAG, "Login");
+    public void signup() {
+        Log.d(TAG, "Signup");
 
         if (!validate()) {
-            onLoginFailed("Incorrect data.");
+            onSignupFailed("Incorrect data.");
             return;
         }
 
-        _loginButton.setEnabled(false);
+        _signupButton.setEnabled(false);
+        showProgress(true);
 
-        String email = _emailText.getText().toString();
-        String password = _passwordText.getText().toString();
+        final User user = new User(
+                _emailText.getText().toString(),
+                _passwordText.getText().toString(),
+                _repeatPasswordText.getText().toString()
+        );
 
-        loginOperation(email, password);
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl(getString(R.string.petparkAPI))
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+
+        UserApiInterface userApiInterface = retrofit.create(UserApiInterface.class);
+        Call<ResponseBody> call = userApiInterface.createUser(user);
+        call.enqueue(new Callback<ResponseBody>() {
+
+            @Override
+            public void onResponse(Response<ResponseBody> response, Retrofit retrofit) {
+                if (response.raw().code() == 200) onSignupSuccess(user);
+                else onSignupFailed("Failed to register.");
+            }
+
+            @Override
+            public void onFailure(Throwable t) {
+                onSignupFailed("Network error, please try again.");
+            }
+        });
     }
 
-    private void loginOperation(String email, String password) {
-        showProgress(true);
+    private void onSignupSuccess(User user) {
+        _signupButton.setEnabled(true);
 
         // Using Retrofit and Gson libraries
         Retrofit retrofit = new Retrofit.Builder()
@@ -130,7 +128,7 @@ public class LoginActivity extends AppCompatActivity {
                 .build();
 
         TokenApiInterface tokenApiInterface = retrofit.create(TokenApiInterface.class);
-        Call<Token> call = tokenApiInterface.getToken("password", email, password);
+        Call<Token> call = tokenApiInterface.getToken("password", user.getEmail(), user.getPassword());
         call.enqueue(new Callback<Token>() {
             @Override
             public void onResponse(Response<Token> response, Retrofit retrofit) {
@@ -138,60 +136,80 @@ public class LoginActivity extends AppCompatActivity {
                     onLoginSuccess(response.body().getAccess_token());
                     showProgress(false);
                 } else {
-                    onLoginFailed("Unrecognized username or password");
+                    onLoginFailed("Error. PLease try to go back and login");
                     showProgress(false);
                 }
             }
 
             @Override
             public void onFailure(Throwable t) {
-                onLoginFailed("Network error, please try again.");
+                onLoginFailed("Network error, please try to go back and login.");
                 showProgress(false);
             }
         });
     }
 
-    @Override
-    public void onBackPressed() {
-        // disable going back to the MainActivity
-        moveTaskToBack(true);
-    }
-
     private void onLoginSuccess(String access_token) {
-        _loginButton.setEnabled(true);
+        Preferences.getInstance(getApplicationContext()).put(Preferences.Key.TOKEN_STR, access_token);
 
-        Preferences.getInstance(this).put(Preferences.Key.TOKEN_STR, access_token);
+        Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+        startActivity(intent);
 
-        goToMainActivity();
+        finish();
     }
 
     private void onLoginFailed(String message) {
-        _loginButton.setEnabled(true);
         Toast.makeText(getApplicationContext(), message, Toast.LENGTH_SHORT).show();
     }
 
-    private void goToMainActivity() {
-        Intent intent = new Intent(getApplicationContext(), MainActivity.class);
-        startActivity(intent);
-        finish();
+    private void onSignupFailed(String message) {
+        _signupButton.setEnabled(true);
+        Toast.makeText(getBaseContext(), message, Toast.LENGTH_SHORT).show();
     }
-    private boolean validate() {
+
+    public boolean validate() {
         boolean valid = true;
 
         String email = _emailText.getText().toString();
         String password = _passwordText.getText().toString();
+        String repeatPass = _repeatPasswordText.getText().toString();
 
-        if (email.isEmpty() || !Patterns.EMAIL_ADDRESS.matcher(email).matches()){
+        if (email.isEmpty() || !android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
             _emailText.setError("enter a valid email address");
             valid = false;
-        } else _emailText.setError(null);
+        } else {
+            _emailText.setError(null);
+        }
 
-        if (password.isEmpty() || password.length() < 4){
-            _passwordText.setError("at least 6 alphanumeric characters");
+        if (!isValidPassword(password)) {
+            _passwordText.setError("at least 6 letters, 1 lower and 1 upper case");
             valid = false;
-        } else _passwordText.setError(null);
+        } else {
+            _passwordText.setError(null);
+        }
+
+        if (!repeatPass.equals(password)) {
+            _repeatPasswordText.setError("the passwords must match");
+            valid = false;
+        } else {
+            _repeatPasswordText.setError(null);
+        }
 
         return valid;
+    }
+
+    private boolean isValidPassword(final String password) {
+
+        Pattern pattern;
+        Matcher matcher;
+
+        final String PASSWORD_PATTERN = "^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=\\S+$).{6,}$";
+
+        pattern = Pattern.compile(PASSWORD_PATTERN);
+        matcher = pattern.matcher(password);
+
+        return matcher.matches();
+
     }
 
     /**
@@ -237,5 +255,5 @@ public class LoginActivity extends AppCompatActivity {
             _loginFormView.setVisibility(show ? View.GONE : View.VISIBLE);
         }
     }
-}
 
+}

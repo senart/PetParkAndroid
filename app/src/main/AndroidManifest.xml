@@ -23,19 +23,17 @@
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-
         <meta-data
             android:name="com.google.android.gms.version"
             android:value="@integer/google_play_services_version" />
-
         <meta-data
             android:name="com.google.android.geo.API_KEY"
-            android:value="AIzaSyBmR9DyYCjr-CYKmoKnXc31kpsL5jw-JCE"/>
+            android:value="AIzaSyBmR9DyYCjr-CYKmoKnXc31kpsL5jw-JCE" />
 
         <activity
             android:name=".activities.LoginActivity"
             android:label="@string/title_activity_login"
-            android:theme="@style/AppTheme.NoActionBar">
+            android:theme="@style/AppTheme.NoActionBarExtended">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -45,12 +43,14 @@
         <activity
             android:name=".activities.MainActivity"
             android:label="@string/app_name"
-            android:theme="@style/AppTheme.NoActionBar">
-        </activity>
+            android:theme="@style/AppTheme.NoActionBar"></activity>
         <activity
             android:name=".activities.PetDetailActivity"
-            android:parentActivityName=".activities.MainActivity">
-        </activity>
+            android:parentActivityName=".activities.MainActivity"></activity>
+        <activity
+            android:name=".activities.SignupActivity"
+            android:theme="@style/AppTheme.NoActionBarExtended"></activity>
+        <activity android:name=".activities.AddPetActivity"></activity>
     </application>
 
 </manifest>
