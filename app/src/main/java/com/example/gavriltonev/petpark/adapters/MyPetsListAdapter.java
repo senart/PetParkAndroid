@@ -23,7 +23,7 @@ public class MyPetsListAdapter extends ArrayAdapter<Pet> {
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        ViewHolder holder;
+        final ViewHolder holder;
 
         if (convertView == null) {
             holder = new ViewHolder();
@@ -41,8 +41,9 @@ public class MyPetsListAdapter extends ArrayAdapter<Pet> {
         holder.petName.setText(getItem(position).getName());
         holder.petSpecies.setText(getItem(position).getSpecies());
 
-        String profilePic = getItem(position).getProfilePic(); // getProfilePic() can return null
+        String profilePic = getItem(position).getProfilePic();
         if (profilePic != null) {
+            holder.petThumbnail.setColorFilter(null);
             Picasso.with(getContext ()).load(getItem(position).getProfilePic() ).into(holder.petThumbnail);
         } else {
             holder.petThumbnail.setColorFilter(R.attr.colorPrimary);

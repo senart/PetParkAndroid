@@ -27,6 +27,14 @@ public class Pet implements Parcelable{
         this.ProfilePic = ProfilePic;
     }
 
+    public Pet(String Species, String Breed, String Name, Integer Age, Double Weight) {
+        this.Species = Species;
+        this.Breed = Breed;
+        this.Name = Name;
+        this.Age = Age;
+        this.Weight = Weight;
+    }
+
     public Pet(Parcel source) {
         PetID = source.readInt();
         Species = source.readString();

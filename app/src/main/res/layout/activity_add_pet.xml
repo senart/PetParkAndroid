@@ -7,6 +7,62 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
+    android:focusableInTouchMode="true"
     tools:context="com.example.gavriltonev.petpark.activities.AddPetActivity">
+
+    <EditText
+        android:id="@+id/petName_addPet"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Wallie"/>
+
+    <Spinner
+        android:id="@+id/petSpecies_addPet"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/petName_addPet"
+        android:layout_alignParentLeft="true"
+        android:paddingTop="10dp"
+        android:paddingBottom="10dp"/>
+
+    <Spinner
+        android:id="@+id/petBreed_addPet"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/petSpecies_addPet"
+        android:layout_alignParentLeft="true"
+        android:paddingTop="10dp"
+        android:paddingBottom="10dp"/>
+
+    <EditText
+        android:id="@+id/petAge_addPet"
+        android:inputType="number"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/petBreed_addPet"
+        android:layout_alignParentLeft="true"
+        android:layout_toLeftOf="@+id/petWeight_addPet"
+        android:hint="3 years old" />
+
+    <EditText
+        android:id="@+id/petWeight_addPet"
+        android:inputType="numberDecimal"
+        android:layout_width="130dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/petBreed_addPet"
+        android:layout_alignParentRight="true"
+        android:hint="2.3 kilos" />
+
+    <Button
+        android:id="@+id/petAdd_addPet"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/petWeight_addPet"
+        android:layout_alignParentLeft="true"
+        android:paddingTop="10dp"
+        android:paddingBottom="10dp"
+        android:textSize="18dp"
+        android:textAllCaps="false"
+        android:text="Add to PetPark!"/>
 
 </RelativeLayout>

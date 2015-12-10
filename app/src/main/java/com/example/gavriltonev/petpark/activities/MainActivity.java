@@ -1,5 +1,6 @@
 package com.example.gavriltonev.petpark.activities;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -18,6 +19,7 @@ import com.example.gavriltonev.petpark.R;
 import com.example.gavriltonev.petpark.fragments.MyPetsListFragment;
 import com.example.gavriltonev.petpark.fragments.PetsGalleryFragment;
 import com.example.gavriltonev.petpark.fragments.PetsMapFragment;
+import com.example.gavriltonev.petpark.utils.Preferences;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -35,6 +37,8 @@ public class MainActivity extends AppCompatActivity
             public void onClick(View view) {
                 Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
                         .setAction("Action", null).show();
+                Intent intent = new Intent(getApplicationContext(), AddPetActivity.class);
+                startActivity(intent);
             }
         });
 
@@ -104,6 +108,8 @@ public class MainActivity extends AppCompatActivity
 
         } else if (id == R.id.nav_logout) {
             // TODO: Log user out
+            Preferences.getInstance().remove(Preferences.Key.TOKEN_STR);
+            finish();
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);

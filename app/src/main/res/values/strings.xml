@@ -18,7 +18,15 @@
     <string name="error_invalid_password">This password is too short</string>
     <string name="error_incorrect_password">This password is incorrect</string>
     <string name="error_field_required">This field is required</string>
-    <string name="permission_rationale">"Contacts permissions are needed for providing email
-        completions."
-    </string>
+    <string name="permission_rationale">"Contacts permissions are needed for providing email completions." </string>
+    <string-array name="species_array">
+        <item>Dog</item>
+        <item>Cat</item>
+        <item>Turtle</item>
+        <item>Rabbit</item>
+        <item>Parrot</item>
+        <item>Chameleon</item>
+        <item>Snake</item>
+        <item>Hamster</item>
+    </string-array>
 </resources>
