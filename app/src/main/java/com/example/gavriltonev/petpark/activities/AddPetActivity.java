@@ -37,7 +37,7 @@ public class AddPetActivity extends Activity implements AdapterView.OnItemSelect
     private Spinner _speciesSpinner;
     private Spinner _breedSpinner;
 
-    private ArrayAdapter<Breed> _breedAdapter;
+    private ArrayAdapter<String> _breedAdapter;
 
     @Override
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
@@ -53,9 +53,9 @@ public class AddPetActivity extends Activity implements AdapterView.OnItemSelect
     }
 
     private void addPet() {
-        _addButton.setEnabled(false);
-
         if (!validate()) return;
+
+        _addButton.setEnabled(false);
 
         String name = _nameText.getText().toString();
         Integer age = Integer.parseInt(_ageText.getText().toString());
@@ -147,8 +147,8 @@ public class AddPetActivity extends Activity implements AdapterView.OnItemSelect
                 if (response.body() == null) {
                     Log.e("NULL RESPONSE BODY: ", response.message());
                 } else {
-                    for (Breed pet : response.body()) {
-                        _breedAdapter.add(pet);
+                    for (Breed breed : response.body()) {
+                        _breedAdapter.add(breed.getBreedID());
                     }
 
                     _breedAdapter.notifyDataSetChanged();
@@ -192,7 +192,7 @@ public class AddPetActivity extends Activity implements AdapterView.OnItemSelect
         _speciesSpinner.setAdapter(adapter);
         _speciesSpinner.setOnItemSelectedListener(this);
 
-        _breedAdapter = new ArrayAdapter<Breed>(this, android.R.layout.simple_spinner_item);
+        _breedAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item);
         _breedAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         _breedSpinner.setAdapter(adapter);
         _breedSpinner.setOnItemSelectedListener(this);

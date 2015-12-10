@@ -20,13 +20,13 @@
     <string name="error_field_required">This field is required</string>
     <string name="permission_rationale">"Contacts permissions are needed for providing email completions." </string>
     <string-array name="species_array">
-        <item>Mercury</item>
-        <item>Venus</item>
-        <item>Earth</item>
-        <item>Mars</item>
-        <item>Jupiter</item>
-        <item>Saturn</item>
-        <item>Uranus</item>
-        <item>Neptune</item>
+        <item>Dog</item>
+        <item>Cat</item>
+        <item>Turtle</item>
+        <item>Rabbit</item>
+        <item>Parrot</item>
+        <item>Chameleon</item>
+        <item>Snake</item>
+        <item>Hamster</item>
     </string-array>
 </resources>

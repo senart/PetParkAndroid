@@ -55,6 +55,9 @@ public class PetsGalleryFragment extends Fragment {
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
+        
+
+
         petsGalleryAdapter = new PetsGalleryAdapter(getActivity(),0);
         mGridView.setAdapter(petsGalleryAdapter);
 
