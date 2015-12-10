@@ -22,22 +22,25 @@ public class PetsGalleryAdapter extends ArrayAdapter<Pet> {
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        ViewHolder holder;
+        final ViewHolder holder;
 
         if (convertView == null) {
             holder = new ViewHolder();
             convertView = LayoutInflater.from(getContext()).inflate(R.layout.view_pets_gallery_thumbnail, parent, false);
             holder.image = (ImageView) convertView.findViewById(R.id.petGalleryImage);
+
             convertView.setTag(holder);
         } else {
             holder = (ViewHolder) convertView.getTag();
         }
 
-        String profilePic = getItem(position).getProfilePic(); // getProfilePic() can return null
+        String profilePic = getItem(position).getProfilePic();
         if (profilePic != null) {
+            holder.image.setColorFilter(null);
             Picasso.with(getContext()).load(profilePic).into(holder.image);
         } else {
             holder.image.setColorFilter(R.attr.colorPrimary);
+            holder.image.setImageResource(R.drawable.ic_menu_gallery);
         }
 
         return convertView;

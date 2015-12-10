@@ -50,7 +50,10 @@
         <activity
             android:name=".activities.SignupActivity"
             android:theme="@style/AppTheme.NoActionBarExtended"></activity>
-        <activity android:name=".activities.AddPetActivity"></activity>
+        <activity
+            android:name=".activities.AddPetActivity"
+            android:theme="@style/AppTheme.CustomDialog"
+            ></activity>
     </application>
 
 </manifest>
