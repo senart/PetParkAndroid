@@ -8,6 +8,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.RadioButton;
 import android.widget.Spinner;
 import android.widget.Toast;
 
@@ -30,6 +31,7 @@ import retrofit.Retrofit;
 public class AddPetActivity extends Activity implements AdapterView.OnItemSelectedListener {
 
     private EditText _nameText;
+    private RadioButton _maleRadio;
     private EditText _ageText;
     private EditText _weightText;
     private Button _addButton;
@@ -58,12 +60,13 @@ public class AddPetActivity extends Activity implements AdapterView.OnItemSelect
         _addButton.setEnabled(false);
 
         String name = _nameText.getText().toString();
+        String gender = _maleRadio.isChecked() ? "Male" : "Female";
         Integer age = Integer.parseInt(_ageText.getText().toString());
         Double weight = Double.parseDouble(_weightText.getText().toString());
         String species = _speciesSpinner.getSelectedItem().toString();
         String breed = _breedSpinner.getSelectedItem().toString();
 
-        final Pet pet = new Pet(species,breed,name,age,weight);
+        final Pet pet = new Pet(species,breed, gender, name,age,weight, null, null);
 
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(getString(R.string.petparkAPI))
@@ -171,6 +174,7 @@ public class AddPetActivity extends Activity implements AdapterView.OnItemSelect
         setContentView(R.layout.activity_add_pet);
 
         _nameText = (EditText) findViewById(R.id.petName_addPet);
+        _maleRadio = (RadioButton) findViewById(R.id.petMale_addPet);
         _ageText = (EditText) findViewById(R.id.petAge_addPet);
         _weightText = (EditText) findViewById(R.id.petWeight_addPet);
         _speciesSpinner = (Spinner) findViewById(R.id.petSpecies_addPet);
