@@ -85,6 +85,7 @@ public class MyPetsListFragment extends ListFragment {
 
         Intent intent = new Intent(getActivity(), PetDetailActivity.class);
         intent.putExtra(PetDetailActivity.EXTRA_PET, myPetsListAdapter.getItem(position));
+        intent.putExtra("foreignUser", false);
         startActivity(intent);
     }
 }

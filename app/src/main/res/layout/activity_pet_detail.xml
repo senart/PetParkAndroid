@@ -5,35 +5,103 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <ScrollView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical">
-
-            <ImageView
-                android:id="@+id/petDetailImage"
+            <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:scaleType="fitCenter" />
+                android:layout_height="match_parent"
+                android:paddingLeft="@dimen/activity_horizontal_margin"
+                android:paddingRight="@dimen/activity_horizontal_margin"
+                android:paddingTop="@dimen/activity_vertical_margin"
+                android:focusableInTouchMode="true" >
 
-            <TextView
-                android:id="@+id/petDetailSpecies"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:textStyle="bold"
-                android:textSize="16pt"/>
+                <ImageView
+                    android:id="@+id/petDetailImage"
+                    android:layout_width="match_parent"
+                    android:minHeight="150dp"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/ic_menu_camera"/>
 
-            <TextView
-                android:id="@+id/petDetailBreed"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:textStyle="italic"
-                android:textSize="14pt"/>
-        </LinearLayout>
-    </ScrollView>
+                <TextView
+                    android:id="@+id/petDetailName"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textStyle="bold"
+                    android:textSize="16pt"
+                    android:paddingTop="4dp"
+                    android:layout_centerHorizontal="true"
+                    android:layout_below="@+id/petDetailImage"
+                    android:text="Name"/>
+
+                <LinearLayout
+                    android:id="@+id/petDetailContainerNameSpecies"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/petDetailName"
+                    android:paddingTop="8dp"
+                    android:layout_centerHorizontal="true" >
+
+                    <TextView
+                        android:id="@+id/petDetailBreed"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textStyle="italic"
+                        android:textSize="14pt"
+                        android:paddingRight="4dp"
+                        android:text="Breed"/>
+
+                    <TextView
+                        android:id="@+id/petDetailSpecies"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textStyle="italic"
+                        android:textSize="14pt"
+                        android:text="Species"/>
+
+                </LinearLayout>
+
+                <TextView
+                    android:id="@+id/petDetailAge"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textStyle="italic"
+                    android:textSize="8pt"
+                    android:layout_toLeftOf="@+id/petDetailGender"
+                    android:layout_below="@+id/petDetailContainerNameSpecies"
+                    android:text="Age"/>
+
+                <TextView
+                    android:id="@+id/petDetailGender"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textStyle="italic"
+                    android:textSize="8pt"
+                    android:paddingLeft="20dp"
+                    android:paddingRight="20dp"
+                    android:layout_centerHorizontal="true"
+                    android:layout_below="@id/petDetailContainerNameSpecies"
+                    android:text="Gender"/>
+
+                <TextView
+                    android:id="@+id/petDetailWeight"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textStyle="italic"
+                    android:textSize="8pt"
+                   android:layout_toRightOf="@+id/petDetailGender"
+                    android:layout_below="@+id/petDetailContainerNameSpecies"
+                    android:text="Weight"/>
+
+                <GridView
+                    android:id="@+id/petDetailGrid"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_below="@+id/petDetailGender"
+                    android:paddingTop="4dp"
+                    android:numColumns="3"
+                    android:horizontalSpacing="4dp"
+                    android:verticalSpacing="4dp"
+                    android:stretchMode="columnWidth">
+                </GridView>
+
+            </RelativeLayout>
 
 </LinearLayout>

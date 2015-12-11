@@ -12,9 +12,32 @@
 
     <EditText
         android:id="@+id/petName_addPet"
-        android:layout_width="match_parent"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_toLeftOf="@+id/petGenderGroup_addPet"
         android:hint="Wallie"/>
+
+    <RadioGroup
+        android:id="@+id/petGenderGroup_addPet"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_alignParentRight="true"
+        android:checkedButton="@+id/petMale_addPet">
+        <RadioButton
+            android:id="@+id/petMale_addPet"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Male" />
+
+        <RadioButton
+            android:id="@+id/petFemale_addPet"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Female" />
+
+    </RadioGroup>
 
     <Spinner
         android:id="@+id/petSpecies_addPet"

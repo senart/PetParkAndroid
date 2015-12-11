@@ -12,24 +12,16 @@ public class Pet implements Parcelable{
     private Integer PetID;
     private String Species;
     private String Breed;
+    private String Gender;
     private String Name;
     private Integer Age;
     private Double Weight;
     private String ProfilePic;
 
-    public Pet(Integer PetID, String Species, String Breed, String Name, Integer Age, Double Weight, String ProfilePic){
-        this.PetID = PetID;
+    public Pet(String Species, String Breed, String Gender, String Name, Integer Age, Double Weight) {
         this.Species = Species;
         this.Breed = Breed;
-        this.Name = Name;
-        this.Age = Age;
-        this.Weight = Weight;
-        this.ProfilePic = ProfilePic;
-    }
-
-    public Pet(String Species, String Breed, String Name, Integer Age, Double Weight) {
-        this.Species = Species;
-        this.Breed = Breed;
+        this.Gender = Gender;
         this.Name = Name;
         this.Age = Age;
         this.Weight = Weight;
@@ -39,6 +31,7 @@ public class Pet implements Parcelable{
         PetID = source.readInt();
         Species = source.readString();
         Breed = source.readString();
+        Gender = source.readString();
         Name = source.readString();
         Age = source.readInt();
         Weight = source.readDouble();
@@ -67,6 +60,14 @@ public class Pet implements Parcelable{
 
     public void setBreed(String breed) {
         Breed = breed;
+    }
+
+    public String getGender() {
+        return Gender;
+    }
+
+    public void setGender(String gender) {
+        Gender = gender;
     }
 
     public String getName() {
@@ -112,9 +113,10 @@ public class Pet implements Parcelable{
         applyDefaultValues();
 
         dest.writeInt(PetID);
-        dest.writeString(Name);
         dest.writeString(Species);
         dest.writeString(Breed);
+        dest.writeString(Gender);
+        dest.writeString(Name);
         dest.writeInt(Age);
         dest.writeDouble(Weight);
         dest.writeString(ProfilePic);
@@ -122,9 +124,10 @@ public class Pet implements Parcelable{
 
     private void applyDefaultValues() {
         if (PetID == null) PetID = -1;
-        if (Name == null) Name = "";
         if (Species == null) Species = "";
         if (Breed == null) Breed = "";
+        if (Gender == null) Gender = "";
+        if (Name == null) Name = "";
         if (Age == null) Age = -1;
         if (Weight == null) Weight = -1.0;
         if (ProfilePic == null) ProfilePic = "";
@@ -141,5 +144,4 @@ public class Pet implements Parcelable{
             return new Pet[size];
         }
     };
-
 }
