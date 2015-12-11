@@ -66,7 +66,7 @@ public class AddPetActivity extends Activity implements AdapterView.OnItemSelect
         String species = _speciesSpinner.getSelectedItem().toString();
         String breed = _breedSpinner.getSelectedItem().toString();
 
-        final Pet pet = new Pet(species,breed, gender, name,age,weight);
+        final Pet pet = new Pet(species,breed, gender, name,age,weight, null, null);
 
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(getString(R.string.petparkAPI))

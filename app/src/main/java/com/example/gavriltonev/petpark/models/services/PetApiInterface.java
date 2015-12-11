@@ -25,6 +25,12 @@ public interface PetApiInterface {
     @GET("api/pets")
     Call<List<Pet>> getAllPets(@Header("Authorization") String authorizationToken);
 
+    @GET("api/pets/{id}")
+    Call<Pet> getPet(@Header("Authorization") String authorizationToken, @Path("id") Integer id);
+
+    @GET("api/pets/{species}/bySpecies")
+    Call<List<Pet>> getAllPetsBySpecies(@Header("Authorization") String authorizationToken, @Path("species") String species);
+
     @GET("api/account/pets")
     Call<List<Pet>> getUserPets(@Header("Authorization") String authorizationToken);
 

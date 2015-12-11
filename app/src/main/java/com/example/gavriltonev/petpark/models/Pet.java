@@ -17,14 +17,18 @@ public class Pet implements Parcelable{
     private Integer Age;
     private Double Weight;
     private String ProfilePic;
+    private Double Latitude;
+    private Double Longitude;
 
-    public Pet(String Species, String Breed, String Gender, String Name, Integer Age, Double Weight) {
+    public Pet(String Species, String Breed, String Gender, String Name, Integer Age, Double Weight, Double Latitude, Double Longitude) {
         this.Species = Species;
         this.Breed = Breed;
         this.Gender = Gender;
         this.Name = Name;
         this.Age = Age;
         this.Weight = Weight;
+        this.Latitude = Latitude;
+        this.Longitude = Longitude;
     }
 
     public Pet(Parcel source) {
@@ -36,6 +40,8 @@ public class Pet implements Parcelable{
         Age = source.readInt();
         Weight = source.readDouble();
         ProfilePic = source.readString();
+        Latitude = source.readDouble();
+        Longitude = source.readDouble();
     }
 
     public int getPetID() {
@@ -94,13 +100,28 @@ public class Pet implements Parcelable{
         Weight = weight;
     }
 
-
     public String getProfilePic() {
         return ProfilePic;
     }
 
     public void setProfilePic(String profilePic) {
         ProfilePic = profilePic;
+    }
+
+    public Double getLatitude() {
+        return Latitude;
+    }
+
+    public void setLatitude(Double latitude) {
+        Latitude = latitude;
+    }
+
+    public Double getLongitude() {
+        return Longitude;
+    }
+
+    public void setLongitude(Double longitude) {
+        Longitude = longitude;
     }
 
     @Override
@@ -120,6 +141,8 @@ public class Pet implements Parcelable{
         dest.writeInt(Age);
         dest.writeDouble(Weight);
         dest.writeString(ProfilePic);
+        dest.writeDouble(Latitude);
+        dest.writeDouble(Longitude);
     }
 
     private void applyDefaultValues() {
@@ -131,6 +154,8 @@ public class Pet implements Parcelable{
         if (Age == null) Age = -1;
         if (Weight == null) Weight = -1.0;
         if (ProfilePic == null) ProfilePic = "";
+        if (Latitude == null) Latitude = 0.0;
+        if (Longitude == null) Longitude = 0.0;
     }
 
     public static Creator<Pet> CREATOR = new Creator<Pet>() {
@@ -144,4 +169,6 @@ public class Pet implements Parcelable{
             return new Pet[size];
         }
     };
+
+
 }

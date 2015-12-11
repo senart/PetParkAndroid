@@ -18,6 +18,6 @@ public interface UserApiInterface {
     @POST("api/account/register")
     Call<ResponseBody> createUser(@Body User user);
 
-    @POST("api/account/position")
-    Call<Pin> updateUserPosition(@Header("Authorization") String authorizationToken, @Body Pin pin);
+    @POST("api/account/updatelocation")
+    Call<ResponseBody> updateLocation(@Header("Authorization") String authorizationToken, @Body Pin pin);
 }
