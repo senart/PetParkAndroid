@@ -164,6 +164,7 @@ public class SignupActivity extends AppCompatActivity {
 
     private void onSignupFailed(String message) {
         _signupButton.setEnabled(true);
+        showProgress(false);
         Toast.makeText(getBaseContext(), message, Toast.LENGTH_SHORT).show();
     }
 

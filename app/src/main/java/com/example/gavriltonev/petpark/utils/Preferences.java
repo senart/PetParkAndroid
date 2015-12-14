@@ -37,10 +37,11 @@ public class Preferences {
     private boolean mBulkUpdate = false;
 
     /**
-     * Enum representing your setting names or key for your setting.
+     * Enum representing the setting names or key for your setting.
      */
     public enum Key {
-        TOKEN_STR
+        TOKEN_STR,
+        USER_NAME_STR
     }
 
     private Preferences(Context context) {

@@ -226,7 +226,7 @@ public class PetsMapFragment extends SupportMapFragment implements
             else if (pet.getLatitude() != 0 && pet.getLongitude() != 0) {
 
                 Double[] pos = coordinateForMarker(pet.getLatitude(), pet.getLongitude(), pets.size());
-                final LatLng adjustedLocation = new LatLng(pos[0], pos[1]);
+                final LatLng adjustedLocation = new LatLng(pet.getLatitude(), pet.getLongitude());
 
                 if (pet.getProfilePic() != null) {
                     Picasso.with(getActivity()).load(pet.getProfilePic()).into(new Target() {

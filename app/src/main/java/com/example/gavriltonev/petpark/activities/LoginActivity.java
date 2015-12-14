@@ -135,7 +135,7 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void onResponse(Response<Token> response, Retrofit retrofit) {
                 if (response.body() != null) {
-                    onLoginSuccess(response.body().getAccess_token());
+                    onLoginSuccess(response.body());
                     showProgress(false);
                 } else {
                     onLoginFailed("Unrecognized username or password");
@@ -157,11 +157,11 @@ public class LoginActivity extends AppCompatActivity {
         moveTaskToBack(true);
     }
 
-    private void onLoginSuccess(String access_token) {
+    private void onLoginSuccess(Token token) {
         _loginButton.setEnabled(true);
 
-        Preferences.getInstance(this).put(Preferences.Key.TOKEN_STR, access_token);
-
+        Preferences.getInstance(this).put(Preferences.Key.TOKEN_STR, token.getAccess_token());
+        Preferences.getInstance(this).put(Preferences.Key.USER_NAME_STR, token.getUserName());
         goToMainActivity();
     }
 

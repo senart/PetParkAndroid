@@ -17,6 +17,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.gavriltonev.petpark.R;
@@ -115,12 +116,6 @@ public class MainActivity extends AppCompatActivity
             getSupportFragmentManager().beginTransaction().replace(R.id.container, MyPetsListFragment.getInstance()).commit();
         } else if (id == R.id.nav_map) {
             getSupportFragmentManager().beginTransaction().replace(R.id.container, PetsMapFragment.getInstance()).commit();
-        } else if (id == R.id.nav_camera) {
-            // TODO: Handle the camera action
-
-        } else if (id == R.id.nav_profile) {
-            // TODO: Show user settings
-
         } else if (id == R.id.nav_logout) {
             // TODO: Log user out
             Preferences.getInstance().remove(Preferences.Key.TOKEN_STR);
